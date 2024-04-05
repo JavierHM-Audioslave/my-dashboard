@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export const Sidebar = () => {
   const sidebarItems: SidebarItemType[] = [
     {
-      path: "/",
+      path: "/dashboard/main",
       svg: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
