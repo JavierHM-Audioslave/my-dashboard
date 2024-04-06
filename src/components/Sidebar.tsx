@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IoLogoReact } from "react-icons/io5";
+import { IoFootball, IoLogoReact } from "react-icons/io5";
 import ActiveLink, { SidebarItemType } from "./ActiveLink";
 import { ReactNode } from "react";
 
@@ -46,6 +46,12 @@ export const Sidebar = () => {
       ),
       data1: "Counter",
       data2: "Contador Client Side",
+    },
+    {
+      path: "/dashboard/pokemons",
+      svg: <IoFootball size={25} />,
+      data1: "Pokemons",
+      data2: "Generación Estática",
     },
   ];
 
