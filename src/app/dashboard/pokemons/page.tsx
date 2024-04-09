@@ -1,12 +1,21 @@
+import { PokemonsResponse } from "@/interfaces/pokemons/pokemons-response";
+import { SimplePokemon } from "@/interfaces/pokemons/simple-pokemon";
 import { ReactNode } from "react";
 
-const getPokemons = async (limit = 20, offset = 0): Promise<void> => {
+const getPokemons = async (
+  limit = 20,
+  offset = 0
+): Promise<SimplePokemon[]> => {
   try {
-    const data = await fetch(
+    const data: Response = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
-    const dataToJson = await data.json();
-    return Promise.resolve(dataToJson);
+    const dataToJson: PokemonsResponse = await data.json();
+    const pokemons = dataToJson.results.map((pokemon) => ({
+      id: pokemon.url.split("/").at(-2) || "",
+      name: pokemon.name,
+    }));
+    return pokemons;
   } catch (error) {
     console.error(error);
     throw new Error("Error al conectar a la API.");
