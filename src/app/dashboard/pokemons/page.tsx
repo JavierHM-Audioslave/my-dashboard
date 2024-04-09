@@ -5,7 +5,7 @@ const getPokemons = async (limit = 20, offset = 0): Promise<void> => {
     const data = await fetch(
       `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
     );
-    const dataToJson = data.json();
+    const dataToJson = await data.json();
     return Promise.resolve(dataToJson);
   } catch (error) {
     console.error(error);
