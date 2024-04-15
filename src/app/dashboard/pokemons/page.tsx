@@ -5,6 +5,7 @@ import { SimplePokemon } from "@/interfaces/pokemons/simple-pokemon";
 import Image from "next/image";
 import { ReactNode } from "react";
 
+// This function gets a bundle of pokemons as many as indicated in limit variable. Then, the data is casted to JSON and an array of SimplePokemon promises is returned.
 const getPokemons = async (
   limit = 20,
   offset = 0
@@ -26,7 +27,9 @@ const getPokemons = async (
   }
 };
 
-const getDetailedPokemon = async (pokemons: SimplePokemon[]) => {
+//This function call getPokemons function, parses the data into JSON and creates a promise of DetailedPokemon array. Then, the function returns only the elements (which are Promise) whose status is fulfilled.
+const getDetailedPokemon = async (): Promise<DetailedPokemon[]> => {
+  const pokemons: SimplePokemon[] = await getPokemons();
   const detailedPokemonsPromise: Promise<DetailedPokemon>[] = pokemons.map(
     async (pokemon: SimplePokemon) => {
       try {
@@ -47,29 +50,31 @@ const getDetailedPokemon = async (pokemons: SimplePokemon[]) => {
 
   const detailedPokemons: PromiseSettledResult<DetailedPokemon>[] =
     await Promise.allSettled(detailedPokemonsPromise);
-  const actualDetailedPokemons = detailedPokemons.map((detailedPokemon) => {
-    if (detailedPokemon.status === "fulfilled") return detailedPokemon.value;
-  });
+  const actualDetailedPokemons: DetailedPokemon[] = detailedPokemons.map(
+    (detailedPokemon) => {
+      if (detailedPokemon.status === "fulfilled") return detailedPokemon.value;
+    }
+  ) as DetailedPokemon[];
   return actualDetailedPokemons;
 };
 
 export default async function PokemonsPage(): Promise<ReactNode> {
   try {
-    const pokemons = await getPokemons();
-    const detailedPokemons = await getDetailedPokemon(pokemons);
+    const detailedPokemons = await getDetailedPokemon();
     return (
-      <div className="flex flex-row justify-center items-center min-h-full">
+      <div className="flex flex-row justify-center items-center min-h-full px-40">
         {detailedPokemons &&
           detailedPokemons.map((detailedPokemon) => {
             if (detailedPokemon?.sprites)
               return (
-                <Image
-                  key={detailedPokemon.sprites.front_default}
-                  src={detailedPokemon.sprites.front_default}
-                  alt="Pokemon image"
-                  width={100}
-                  height={100}
-                />
+                <div key={detailedPokemon.sprites.front_default}>
+                  <Image
+                    src={detailedPokemon.sprites.front_default}
+                    alt="Pokemon image"
+                    width={100}
+                    height={100}
+                  />
+                </div>
               );
           })}
       </div>
