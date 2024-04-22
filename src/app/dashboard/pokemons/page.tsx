@@ -29,7 +29,7 @@ const getPokemons = async (
 
 //This function call getPokemons function, parses the data into JSON and creates a promise of DetailedPokemon array. Then, the function returns only the elements (which are Promise) whose status is fulfilled.
 const getDetailedPokemon = async (): Promise<DetailedPokemon[]> => {
-  const pokemons: SimplePokemon[] = await getPokemons();
+  const pokemons: SimplePokemon[] = await getPokemons(200);
   const detailedPokemonsPromise: Promise<DetailedPokemon>[] = pokemons.map(
     async (pokemon: SimplePokemon) => {
       try {
@@ -62,7 +62,7 @@ export default async function PokemonsPage(): Promise<ReactNode> {
   try {
     const detailedPokemons = await getDetailedPokemon();
     return (
-      <div className="flex flex-row justify-center items-center min-h-full px-40">
+      <div className="flex flex-row flex-wrap justify-center items-center px-40">
         {detailedPokemons &&
           detailedPokemons.map((detailedPokemon) => {
             if (detailedPokemon?.sprites)
@@ -71,8 +71,8 @@ export default async function PokemonsPage(): Promise<ReactNode> {
                   <Image
                     src={detailedPokemon.sprites.front_default}
                     alt="Pokemon image"
-                    width={100}
-                    height={100}
+                    width={110}
+                    height={110}
                   />
                 </div>
               );
