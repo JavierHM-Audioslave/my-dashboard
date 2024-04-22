@@ -1,7 +1,7 @@
-import { DetailedPokemon } from "@/interfaces/pokemons/detailed-pokemon";
-import { PokemonResponse } from "@/interfaces/pokemons/pokemon-response";
-import { PokemonsResponse } from "@/interfaces/pokemons/pokemons-response";
-import { SimplePokemon } from "@/interfaces/pokemons/simple-pokemon";
+import { DetailedPokemon } from "@/pokemons-bunch/interfaces/detailed-pokemon";
+import { PokemonResponse } from "@/pokemons-bunch/interfaces/pokemon-response";
+import { PokemonsResponse } from "@/pokemons-bunch/interfaces/pokemons-response";
+import { SimplePokemon } from "@/pokemons-bunch/interfaces/simple-pokemon";
 import Image from "next/image";
 import { ReactNode } from "react";
 
