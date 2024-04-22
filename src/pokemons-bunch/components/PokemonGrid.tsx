@@ -12,15 +12,6 @@ export const PokemonGrid = ({ detailedPokemons }: Props) => {
         detailedPokemons.map((pokemon) => {
           if (pokemon?.sprites)
             return (
-              /*     <div key={detailedPokemon.sprites.front_default}>
-                <Image
-                  src={detailedPokemon.sprites.front_default}
-                  alt="Pokemon image"
-                  width={110}
-                  height={110}
-                />
-              </div> */
-              //   <span key={detailedPokemon.sprites.front_default}>Asd</span>
               <PokemonCard
                 key={pokemon.sprites.front_default}
                 pokemon={pokemon}
