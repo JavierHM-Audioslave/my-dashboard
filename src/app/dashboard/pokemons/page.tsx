@@ -1,3 +1,4 @@
+import { PokemonGrid } from "@/pokemons-bunch/components/PokemonGrid";
 import { DetailedPokemon } from "@/pokemons-bunch/interfaces/detailed-pokemon";
 import { PokemonResponse } from "@/pokemons-bunch/interfaces/pokemon-response";
 import { PokemonsResponse } from "@/pokemons-bunch/interfaces/pokemons-response";
@@ -36,6 +37,8 @@ const getDetailedPokemon = async (): Promise<DetailedPokemon[]> => {
         const data: Response = await fetch(pokemon.url);
         const dataToJson: PokemonResponse = await data.json();
         const tempDetailedPokemon: DetailedPokemon = {
+          id: dataToJson.id.toString(),
+          name: dataToJson.name,
           sprites: dataToJson.sprites,
         };
         return tempDetailedPokemon;
@@ -61,24 +64,7 @@ const getDetailedPokemon = async (): Promise<DetailedPokemon[]> => {
 export default async function PokemonsPage(): Promise<ReactNode> {
   try {
     const detailedPokemons = await getDetailedPokemon();
-    return (
-      <div className="flex flex-row flex-wrap justify-center items-center px-40">
-        {detailedPokemons &&
-          detailedPokemons.map((detailedPokemon) => {
-            if (detailedPokemon?.sprites)
-              return (
-                <div key={detailedPokemon.sprites.front_default}>
-                  <Image
-                    src={detailedPokemon.sprites.front_default}
-                    alt="Pokemon image"
-                    width={110}
-                    height={110}
-                  />
-                </div>
-              );
-          })}
-      </div>
-    );
+    return <PokemonGrid detailedPokemons={detailedPokemons} />;
   } catch (err) {
     if (err instanceof Error) {
       return <div>{err.message}</div>;
