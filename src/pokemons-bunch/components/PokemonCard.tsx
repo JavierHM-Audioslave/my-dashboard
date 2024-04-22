@@ -21,6 +21,7 @@ export const PokemonCard = ({ pokemon }: Props): ReactNode => {
             width={100}
             height={100}
             className="mx-auto"
+            priority={false}
           />
           <p className="capitalize pt-2 text-lg font-semibold text-gray-50">
             {name}
